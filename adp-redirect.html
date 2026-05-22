@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Redirecting to ADP...</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #f5f5f5;
+    }
+    .box {
+      text-align: center;
+      background: white;
+      padding: 2rem 3rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    h2 { margin: 0 0 0.5rem; font-size: 1.2rem; color: #333; }
+    p  { color: #666; font-size: 0.9rem; margin: 0 0 1rem; }
+    a  { color: #0078d4; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+<div class="box">
+  <h2>Redirecting to ADP Learning...</h2>
+  <p>You will be redirected automatically.</p>
+  <a id="fallback" href="#">Click here if not redirected</a>
+</div>
+
+<script>
+  // ── COURSE MAPPING TABLE ──────────────────────────────────────────────────
+  // Format: "package_id": "full ADP URL"
+  // To add more courses, copy any line below and update the ID and URL.
+  const courses = {
+    "36896591": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.36896591/undefined)",
+    "15626661": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.15626661/undefined)",
+    "37897101": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37897101/undefined)",
+    "37387818": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37387818/undefined)",
+    "37797104": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37797104/undefined)",
+    "38112137": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.38112137/undefined)",
+    "37233291": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37233291/undefined)",
+    "37861760": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37861760/undefined)",
+    "37040536": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37040536/undefined)",
+    "36943662": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.36943662/undefined)",
+    "18918576": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.18918576/undefined)",
+    "13746539": "https://my.adp.com/static/redbox/#/learning/dashboard/(details:learning/com.Go1.package.13746539/undefined)",
+    "36852287": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.36852287/undefined)",
+    "13746532": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.13746532/undefined)",
+    "13746533": "https://my.adp.com/static/redbox/#/learning/dashboard/(details:learning/com.Go1.package.13746533/undefined)",
+    "36345301": "https://my.adp.com/static/redbox/#/learning/dashboard/(details:learning/com.Go1.package.36345301/undefined)",
+    "36895705": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.36895705/undefined)",
+    "37626179": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37626179/undefined)",
+    "38174651": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.38174651/undefined)",
+    "38109116": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.38109116/undefined)",
+    "37849073": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37849073/undefined)",
+    "38094447": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.38094447/undefined)",
+    "38135378": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.38135378/undefined)",
+    "24962525": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.24962525/undefined)",
+    "36848041": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.36848041/undefined)",
+    "38174457": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.38174457/undefined)",
+    "38031366": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.38031366/undefined)",
+    "37156006": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37156006/undefined)",
+    "37417246": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37417246/undefined)",
+    "38099030": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.38099030/undefined)",
+    "37125494": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37125494/undefined)",
+    "37206347": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37206347/undefined)",
+    "10622406": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.10622406/undefined)",
+    "22803212": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.22803212/undefined)",
+    "20421257": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.20421257/undefined)",
+    "36490676": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.36490676/undefined)",
+    "12929310": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.12929310/undefined)",
+    "18918976": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.18918976/undefined)",
+    "36967489": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.36967489/undefined)",
+    "36377487": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.36377487/undefined)",
+    "23740789": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.23740789/ADP000579596)",
+    "19043672": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.19043672/ADP000228973)",
+    "38112529": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.38112529/undefined)",
+    "38104000": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.38104000/undefined)",
+    "37853456": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37853456/undefined)",
+    "37418457": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37418457/undefined)",
+    "37124324": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37124324/undefined)",
+    "36436462": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.36436462/undefined)",
+    "37491726": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37491726/undefined)",
+    "38174528": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.38174528/undefined)",
+    "13886829": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.13886829/undefined)",
+    "37219487": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37219487/undefined)",
+    "36114335": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.36114335/undefined)",
+    "37833784": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37833784/undefined)",
+    "36106491": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.36106491/undefined)",
+    "MGR-101":  "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/MGR-101/undefined)",
+    "20422849": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.20422849/undefined)",
+    "38104150": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.38104150/undefined)",
+    "11086384": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.11086384/undefined)",
+    "2645853":  "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.2645853/undefined)",
+    "36432243": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.36432243/undefined)",
+    "37897810": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37897810/undefined)",
+    "36377715": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.36377715/undefined)",
+    "23738626": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.23738626/undefined)",
+    "37734943": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37734943/undefined)",
+    "37519778": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37519778/undefined)",
+    "20423352": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.20423352/undefined)",
+    "37447266": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37447266/undefined)",
+    "30390732": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.30390732/undefined)",
+    "37120191": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37120191/undefined)",
+    "9275137":  "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.9275137/undefined)",
+    "37518832": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37518832/undefined)",
+    "38258802": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.38258802/undefined)",
+    "38031258": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.38031258/undefined)",
+    "37132527": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37132527/undefined)",
+    "13887777": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.13887777/undefined)",
+    "37289138": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37289138/undefined)",
+    "37037081": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37037081/undefined)",
+    "13887808": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.13887808/undefined)",
+    "13887780": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.13887780/undefined)",
+    "20425575": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.20425575/undefined)",
+    "6542106":  "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.6542106/undefined)",
+    "36368732": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.36368732/undefined)",
+    "12966592": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.12966592/undefined)",
+    "9139933":  "https://my.adp.com/static/redbox/#/learning/dashboard/(details:learning/com.Go1.package.9139933/undefined)",
+    "18919240": "https://my.adp.com/static/redbox/#/learning/dashboard/(details:learning/com.Go1.package.18919240/undefined)",
+    "36507431": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.36507431/undefined)",
+    "4198000":  "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.4198000/undefined)",
+    "13758596": "https://my.adp.com/static/redbox/#/learning/dashboard/(details:learning/com.Go1.package.13758596/undefined)",
+    "37197565": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37197565/undefined)",
+    "38141196": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.38141196/undefined)",
+    "13979828": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.13979828/undefined)",
+    "6417732":  "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.6417732/undefined)",
+    "38049626": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.38049626/undefined)",
+    "37197623": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37197623/undefined)",
+    "38416509": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.38416509/undefined)",
+    "36447228": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.36447228/undefined)",
+    "7790566":  "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.7790566/undefined)",
+    "6085177":  "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.6085177/undefined)",
+    "17054539": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.17054539/undefined)",
+    "2471080":  "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.2471080/undefined)",
+    "37323549": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37323549/undefined)",
+    "37448022": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.37448022/undefined)",
+    "13892511": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.13892511/undefined)",
+    "19652035": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.19652035/undefined)",
+    "18918485": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.18918485/undefined)",
+    "33982575": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.33982575/undefined)",
+    "6540856":  "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.6540856/undefined)",
+    "17054422": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.17054422/undefined)",
+    "36116704": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.36116704/undefined)",
+    "18918491": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.18918491/undefined)",
+    "18918475": "https://my.adp.com/static/redbox/?#/learning/dashboard/(details:learning/com.Go1.package.18918475/undefined)"
+  };
+
+  // ── REDIRECT LOGIC ────────────────────────────────────────────────────────
+  const params = new URLSearchParams(window.location.search);
+  const pkg    = params.get("pkg");
+  const url    = pkg && courses[pkg];
+
+  if (url) {
+    document.getElementById("fallback").href = url;
+    window.location.href = url;
+  } else {
+    document.querySelector("h2").textContent = "Course not found.";
+    document.querySelector("p").textContent  = "The course ID provided does not exist in the mapping table.";
+    document.getElementById("fallback").style.display = "none";
+  }
+</script>
+</body>
+</html>
